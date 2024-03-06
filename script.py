@@ -21,6 +21,8 @@ def detect(frame, faceCascade, eyeCascade, noseCascade, mouthCascade):
     if len(coordinates) == 4:
         roi_frame = frame[coordinates[1]:coordinates[1]+coordinates[3], coordinates[0]:coordinates[0]+coordinates[2]]
         coordinates = draw_boundary(roi_frame, eyeCascade, 1.1, 14, color['green'], "Eye")
+        coordinates = draw_boundary(roi_frame, noseCascade, 1.1, 5, color['red'], "Nose")
+        coordinates = draw_boundary(roi_frame, mouthCascade, 1.1, 20, color['yellow'], "Mouth")
 
     return frame
 
