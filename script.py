@@ -11,15 +11,17 @@ def draw_boundary(frame, classifier, scaleFactor=1.1, minNeighbors=5, color=(0, 
         cv2.putText(frame, text, (x, y-10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, color, 2)
         coordinates = [x, y, w, h]
 
-    return frame, coordinates
+    return coordinates
 
 
 def detect(frame, faceCascade, eyeCascade, noseCascade, mouthCascade):
     color = {'blue': (255, 0, 0), 'green': (0, 255, 0), 'red': (0, 0, 255), 'yellow': (0, 255, 255)}
-    frame, face = draw_boundary(frame, faceCascade, 1.1, 10, color['blue'], "Face")
-    # frame, eye = draw_boundary(frame, eyeCascade, 1.1, 12, color['green'], "Eye")
-    # frame, nose = draw_boundary(frame, noseCascade, 1.1, 12, color['red'], "Nose")
-    # frame, mouth = draw_boundary(frame, mouthCascade, 1.1, 12, color['yellow'], "Mouth")
+    coordinates = draw_boundary(frame, faceCascade, 1.1, 10, color['blue'], "Face")
+
+    if len(coordinates) == 4:
+        roi_frame = frame[coordinates[1]:coordinates[1]+coordinates[3], coordinates[0]:coordinates[0]+coordinates[2]]
+        coordinates = draw_boundary(roi_frame, eyeCascade, 1.1, 14, color['green'], "Eye")
+
     return frame
 
 
